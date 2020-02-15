@@ -49,4 +49,9 @@ COPY --from=builder /opt/quiche/deps/boringssl/.openssl /opt/quiche/deps/borings
 # Resolve any issues of C-level lib
 # location caches ("shared library cache")
 RUN ldconfig
+
+WORKDIR /opt
+# add httpstat script
+RUN curl -s https://raw.githubusercontent.com/b4b4r07/httpstat/master/httpstat.sh >httpstat.sh && chmod +x httpstat.sh
+
 CMD ["curl"]

@@ -3,7 +3,7 @@
 [![](https://img.shields.io/docker/cloud/automated/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 [![](https://img.shields.io/docker/pulls/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 
-Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.2.0` for **HTTP3 support**
+Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.2.0` for **HTTP3 support**, `httpstat` for visualization.
 
 **Usage**
 
@@ -51,3 +51,9 @@ server: cloudflare
 cf-ray: 5631a4f699ab0065-DME
 * Connection #0 to host yurets.pro left intact
 ```
+
+**httpstat support**
+
+`docker run -it --rm ymuski/curl-http3 ./httpstat.sh -ILv https://blog.cloudflare.com --http3`
+
+![](httpstat.png?raw=true "HTTPSTAT H3")
