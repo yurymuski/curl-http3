@@ -27,7 +27,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y -q;
 # build quiche:
 RUN export PATH="$HOME/.cargo/bin:$PATH" && \
     cd quiche && \
-    QUICHE_BSSL_PATH=$PWD/deps/boringssl cargo build --release --features pkg-config-meta
+    QUICHE_BSSL_PATH=$PWD/deps/boringssl cargo build --release --features pkg-config-meta,qlog
 
 
 #adding curl
