@@ -3,15 +3,15 @@
 [![](https://img.shields.io/docker/cloud/automated/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 [![](https://img.shields.io/docker/pulls/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 
-Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.5.1` for **HTTP3 support**, `httpstat` for visualization.
+Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.7.0` for **HTTP3 support**, `httpstat` for visualization.
 
 **Usage**
 
 `docker run -it --rm ymuski/curl-http3 curl -V`
 ```
-curl 7.73.0-DEV (x86_64-pc-linux-gnu) libcurl/7.73.0-DEV BoringSSL quiche/0.5.1
+curl 7.75.0-DEV (x86_64-pc-linux-gnu) libcurl/7.75.0-DEV BoringSSL quiche/0.7.0
 Release-Date: [unreleased]
-Protocols: dict file ftp ftps gopher http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp
 Features: alt-svc AsynchDNS HTTP3 HTTPS-proxy IPv6 Largefile NTLM NTLM_WB SSL UnixSockets
 ```
 
