@@ -17,14 +17,16 @@ RUN git clone --recursive https://github.com/cloudflare/quiche
 # build quiche
 RUN export PATH="$HOME/.cargo/bin:$PATH" && \
     cd quiche && \
-    cargo build --release --features pkg-config-meta,qlog && \
+    git checkout 0.7.0 && \
+    cargo build --release --features ffi,pkg-config-meta,qlog && \
     mkdir deps/boringssl/src/lib && \
     ln -vnf $(find target/release -name libcrypto.a -o -name libssl.a) deps/boringssl/src/lib/
 
 
 # add curl
-RUN git clone https://github.com/curl/curl && \
-    cd curl && \
+RUN git clone https://github.com/curl/curl
+RUN cd curl && \
+    git checkout curl-7_75_0 && \
     ./buildconf && \
     ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-ssl=/opt/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --enable-alt-svc && \
     make && \
