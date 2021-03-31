@@ -9,9 +9,9 @@ Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.7.0` for **HTTP3
 
 `docker run -it --rm ymuski/curl-http3 curl -V`
 ```
-curl 7.75.0-DEV (x86_64-pc-linux-gnu) libcurl/7.75.0-DEV BoringSSL quiche/0.7.0
+curl 7.76.0-DEV (x86_64-pc-linux-gnu) libcurl/7.76.0-DEV BoringSSL quiche/0.7.0
 Release-Date: [unreleased]
-Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
 Features: alt-svc AsynchDNS HTTP3 HTTPS-proxy IPv6 Largefile NTLM NTLM_WB SSL UnixSockets
 ```
 

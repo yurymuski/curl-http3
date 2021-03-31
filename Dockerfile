@@ -4,7 +4,7 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
 WORKDIR /opt
 
-ARG CURL_VERSION=curl-7_75_0
+ARG CURL_VERSION=curl-7_76_0
 ARG QUICHE_VERSION=0.7.0
 
 RUN apt-get update && \
