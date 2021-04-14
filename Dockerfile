@@ -4,8 +4,8 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
 WORKDIR /opt
 
-ARG CURL_VERSION=curl-7_76_0
-ARG QUICHE_VERSION=0.7.0
+ARG CURL_VERSION=curl-7_76_1
+ARG QUICHE_VERSION=0.8.0
 
 RUN apt-get update && \
     apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
