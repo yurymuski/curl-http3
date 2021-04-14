@@ -4,6 +4,9 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
 WORKDIR /opt
 
+ARG CURL_VERSION=curl-7_76_1
+ARG QUICHE_VERSION=0.8.0
+
 RUN apt-get update && \
     apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
 
@@ -17,7 +20,7 @@ RUN git clone --recursive https://github.com/cloudflare/quiche
 # build quiche
 RUN export PATH="$HOME/.cargo/bin:$PATH" && \
     cd quiche && \
-    git checkout 0.7.0 && \
+    git checkout $QUICHE_VERSION && \
     cargo build --release --features ffi,pkg-config-meta,qlog && \
     mkdir deps/boringssl/src/lib && \
     ln -vnf $(find target/release -name libcrypto.a -o -name libssl.a) deps/boringssl/src/lib/
@@ -26,7 +29,7 @@ RUN export PATH="$HOME/.cargo/bin:$PATH" && \
 # add curl
 RUN git clone https://github.com/curl/curl
 RUN cd curl && \
-    git checkout curl-7_75_0 && \
+    git checkout $CURL_VERSION && \
     ./buildconf && \
     ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-ssl=/opt/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --enable-alt-svc && \
     make && \
