@@ -4,8 +4,8 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
 WORKDIR /opt
 
-ARG CURL_VERSION=curl-7_76_1
-ARG QUICHE_VERSION=0.8.0
+ARG CURL_VERSION=curl-7_88_1
+ARG QUICHE_VERSION=0.16.0
 
 RUN apt-get update && \
     apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
@@ -21,22 +21,23 @@ RUN git clone --recursive https://github.com/cloudflare/quiche
 RUN export PATH="$HOME/.cargo/bin:$PATH" && \
     cd quiche && \
     git checkout $QUICHE_VERSION && \
-    cargo build --release --features ffi,pkg-config-meta,qlog && \
-    mkdir deps/boringssl/src/lib && \
-    ln -vnf $(find target/release -name libcrypto.a -o -name libssl.a) deps/boringssl/src/lib/
+    cargo build --package quiche --release --features ffi,pkg-config-meta,qlog && \
+    mkdir quiche/deps/boringssl/src/lib && \
+    ln -vnf $(find target/release -name libcrypto.a -o -name libssl.a) quiche/deps/boringssl/src/lib/
+
 
 
 # add curl
 RUN git clone https://github.com/curl/curl
 RUN cd curl && \
     git checkout $CURL_VERSION && \
-    ./buildconf && \
-    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-ssl=/opt/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --enable-alt-svc && \
+    autoreconf -fi && \
+    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release && \
     make && \
     make DESTDIR="/ubuntu/" install
 
 
-FROM ubuntu:bionic
+FROM ubuntu:18.04
 RUN apt-get update && apt-get install -y curl
 
 COPY --from=builder /ubuntu/usr/local/ /usr/local/
