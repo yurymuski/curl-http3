@@ -1,5 +1,4 @@
 # curl-http3
-[![](https://img.shields.io/docker/cloud/automated/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 [![](https://img.shields.io/docker/pulls/ymuski/curl-http3?style=flat-square)](https://hub.docker.com/r/ymuski/curl-http3)
 
 Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.17.2` for **HTTP3 support**, `httpstat` for visualization.
