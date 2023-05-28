@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS builder
+FROM ubuntu:20.04 AS builder
 
 LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
@@ -8,7 +8,7 @@ ARG CURL_VERSION=curl-8_1_1
 ARG QUICHE_VERSION=0.17.2
 
 RUN apt-get update && \
-    apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
+    DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
 
 # https://github.com/curl/curl/blob/master/docs/HTTP3.md#quiche-version
 
@@ -37,7 +37,7 @@ RUN cd curl && \
     make DESTDIR="/ubuntu/" install
 
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 RUN apt-get update && apt-get install -y curl
 
 COPY --from=builder /ubuntu/usr/local/ /usr/local/
