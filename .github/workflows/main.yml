@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4.x
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -29,5 +32,5 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:${{ github.ref }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:$GITHUB_REF_SLUG
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
