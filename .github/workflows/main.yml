@@ -32,5 +32,5 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:$GITHUB_REF_SLUG
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}:latest
