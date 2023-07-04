@@ -5,7 +5,7 @@ Docker image of `curl` compiled with  `BoringSSL` and `quiche/0.17.2` for **HTTP
 
 Link for [curl + http3 manual](https://github.com/curl/curl/blob/master/docs/HTTP3.md#quiche-version)
 
-**Usage**
+## Usage
 
 `docker run -it --rm ymuski/curl-http3 curl -V`
 ```
@@ -37,10 +37,15 @@ alt-svc: h3=":443"; ma=86400
 
 ```
 
-**httpstat support**
+### httpstat support
 
 `docker run -it --rm ymuski/curl-http3 ./httpstat.sh -ILv https://blog.cloudflare.com --http3`
 
 `docker run -it --rm ymuski/curl-http3 ./httpstat.sh -ILv https://yurets.pro --http3`
 
 ![](httpstat.png?raw=true "HTTPSTAT H3")
+
+
+## Build
+
+`docker buildx build --platform linux/arm,linux/arm64,linux/amd64  -t ymuski/curl-http3:latest -t ymuski/curl-http3:8.1.2 . --push`
