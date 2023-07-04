@@ -9,7 +9,7 @@ Link for [curl + http3 manual](https://github.com/curl/curl/blob/master/docs/HTT
 
 `docker run -it --rm ymuski/curl-http3 curl -V`
 ```
-curl 8.1.1-DEV (x86_64-pc-linux-gnu) libcurl/8.1.1-DEV BoringSSL quiche/0.17.2
+curl 8.1.2-DEV (x86_64-pc-linux-gnu) libcurl/8.1.2-DEV BoringSSL quiche/0.17.2
 Release-Date: [unreleased]
 Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp
 Features: alt-svc AsynchDNS HSTS HTTP3 HTTPS-proxy IPv6 Largefile NTLM NTLM_WB SSL threadsafe UnixSockets
@@ -48,4 +48,10 @@ alt-svc: h3=":443"; ma=86400
 
 ## Build
 
-`docker buildx build --platform linux/arm,linux/arm64,linux/amd64  -t ymuski/curl-http3:latest -t ymuski/curl-http3:8.1.2 . --push`
+```
+docker buildx build --platform linux/amd64  -t ymuski/curl-http3:latest -t ymuski/curl-http3:8.1.2 . --push
+
+# quiche fails to compile for arm
+docker buildx build --platform linux/arm,linux/arm64,linux/amd64  -t ymuski/curl-http3:latest -t ymuski/curl-http3:8.1.2 . --push
+
+```
