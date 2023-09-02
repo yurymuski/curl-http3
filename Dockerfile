@@ -38,7 +38,7 @@ RUN cd curl && \
 
 
 FROM ubuntu:20.04
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /ubuntu/usr/local/ /usr/local/
 COPY --from=builder /opt/quiche/target/release /opt/quiche/target/release
