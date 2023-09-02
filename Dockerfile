@@ -8,7 +8,7 @@ ARG CURL_VERSION=curl-8_1_2
 ARG QUICHE_VERSION=0.17.2
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl;
+    DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl nghttp2;
 
 # https://github.com/curl/curl/blob/master/docs/HTTP3.md#quiche-version
 
@@ -32,7 +32,7 @@ RUN git clone https://github.com/curl/curl
 RUN cd curl && \
     git checkout $CURL_VERSION && \
     autoreconf -fi && \
-    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release && \
+    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --with-nghttp2 && \
     make && \
     make DESTDIR="/ubuntu/" install
 
