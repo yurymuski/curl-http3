@@ -4,8 +4,8 @@ LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
 WORKDIR /opt
 
-ARG CURL_VERSION=curl-8_1_2
-ARG QUICHE_VERSION=0.17.2
+ARG CURL_VERSION=curl-8_2_1
+ARG QUICHE_VERSION=0.18.0
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl nghttp2;
