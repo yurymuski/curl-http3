@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 AS builder
+FROM debian:12 AS builder
 
 LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
 
@@ -8,7 +8,7 @@ ARG CURL_VERSION=curl-8_2_1
 ARG QUICHE_VERSION=0.18.0
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl nghttp2;
+    DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git autoconf libtool cmake golang-go curl libnghttp2-dev zlib1g-dev;
 
 # https://github.com/curl/curl/blob/master/docs/HTTP3.md#quiche-version
 
@@ -26,21 +26,20 @@ RUN export PATH="$HOME/.cargo/bin:$PATH" && \
     ln -vnf $(find target/release -name libcrypto.a -o -name libssl.a) quiche/deps/boringssl/src/lib/
 
 
-
 # add curl
 RUN git clone https://github.com/curl/curl
 RUN cd curl && \
     git checkout $CURL_VERSION && \
     autoreconf -fi && \
-    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --with-nghttp2 && \
+    ./configure LDFLAGS="-Wl,-rpath,/opt/quiche/target/release" --with-openssl=/opt/quiche/quiche/deps/boringssl/src --with-quiche=/opt/quiche/target/release --with-nghttp2 --with-zlib && \
     make && \
-    make DESTDIR="/ubuntu/" install
+    make DESTDIR="/debian/" install
 
 
-FROM ubuntu:20.04
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+FROM debian:12-slim
+RUN apt-get update && apt-get install -y ca-certificates nghttp2 zlib1g && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /ubuntu/usr/local/ /usr/local/
+COPY --from=builder /debian/usr/local/ /usr/local/
 COPY --from=builder /opt/quiche/target/release /opt/quiche/target/release
 
 # Resolve any issues of C-level lib
