@@ -1,10 +1,11 @@
 FROM debian:12 AS builder
 
-LABEL maintainer="Yury Muski <muski.yury@gmail.com>"
+LABEL maintainer="Aline Castello Branco <aline.castellobranco84@gmail.com>"
 
 WORKDIR /opt
 
-ARG CURL_VERSION=curl-8_2_1
+# this is the accurate version that works with quiche 0.18.0
+ARG CURL_VERSION=curl-7_85_0
 ARG QUICHE_VERSION=0.18.0
 
 RUN apt-get update && \
